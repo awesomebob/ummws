@@ -32,9 +32,7 @@ def switch_to_triple():
     execute_set("gsettings set org.gnome.desktop.background picture-options spanned")
 
 def check_connected():
-    command = "xrandr | grep -c -G '\\bconnected.*[0-9]+'"
-    check = int(execute_get(command))
-    return check
+    return int(execute_get("xrandr | grep -c -G '\\bconnected.*[0-9]+'"))
 
 def check_wallpaper():
     check = execute_get("gsettings get org.gnome.desktop.background picture-uri")
