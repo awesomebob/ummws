@@ -16,19 +16,19 @@ var execute_get = function(command){
 }
 
 var switch_to_single = function(){
-  console.log("switching to single");
+  execute_set("notify-send 'switching to single'");
   execute_set("gsettings set org.gnome.desktop.background picture-uri " + single_picture);
   execute_set("gsettings set org.gnome.desktop.background picture-options zoom");
 }
 
 var switch_to_double = function(){
-  console.log("switching to double");
+  execute_set("notify-send 'switching to double'");
   execute_set("gsettings set org.gnome.desktop.background picture-uri " + double_picture);
   execute_set("gsettings set org.gnome.desktop.background picture-options spanned");
 }
 
 var switch_to_triple = function(){
-  console.log("switching to triple");
+  execute_set("notify-send 'switching to triple'");
   execute_set("gsettings set org.gnome.desktop.background picture-uri " + triple_picture);
   execute_set("gsettings set org.gnome.desktop.background picture-options spanned");
 }
@@ -49,10 +49,11 @@ var check_wallpaper = function(){
 }
 
 var arrange = function(){
-  test = [check_connected(), check_wallpaper()].toString();
+  var test = [check_connected(), check_wallpaper()];
+  var testString = test.join(', ');
   console.log(test);
-  if (test === '1,single' || test === '2,double' || test === '3,triple'){
-    console.log("all good");
+  if (testString === "1, single" || test === "2, double" || test === "3, triple"){
+    execute_set("notify-send 'already on " + test[1] + "-monitor wallpaper'");
   } else if (test[0] == 1){
     switch_to_single();
   } else if (test[0] == 2){
