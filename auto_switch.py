@@ -17,17 +17,17 @@ def execute_get(command):
     return subprocess.check_output(["/bin/bash", "-c", command]).decode("utf-8").strip()
 
 def switch_to_single():
-    print("switching to single")
+    execute_set('notify-send "switching to single-monitor background"')
     execute_set("gsettings set org.gnome.desktop.background picture-uri " + single_picture)
     execute_set("gsettings set org.gnome.desktop.background picture-options zoom")
 
 def switch_to_double():
-    print("switching to double")
+    execute_set('notify-send "switching to double-monitor background"')
     execute_set("gsettings set org.gnome.desktop.background picture-uri " + double_picture)
     execute_set("gsettings set org.gnome.desktop.background picture-options spanned")
 
 def switch_to_triple():
-    print("switching to triple")
+    execute_set('notify-send "switching to triple-monitor background"')
     execute_set("gsettings set org.gnome.desktop.background picture-uri " + triple_picture)
     execute_set("gsettings set org.gnome.desktop.background picture-options spanned")
 
@@ -47,7 +47,7 @@ def arrange():
     test = (check_connected(), check_wallpaper())
     print(test)
     if test == (1, "single") or test == (2, "double") or test == (3, "triple"):
-        print("all good")
+        execute_set('notify-send "already on ' + test[1] + '-monitor background"')
         pass
     elif test[0] == 1:
         switch_to_single()
