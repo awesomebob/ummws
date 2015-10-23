@@ -2,9 +2,9 @@
 
 var spawn = require('child_process').spawnSync;
 
-var single_picture = "'file://" + process.cwd() + "/1_screen.png'"
-var double_picture = "'file://" + process.cwd() + "/2_screens.png'"
-var triple_picture = "'file://" + process.cwd() + "/3_screens.png'"
+var single_picture = "'file://" + __dirname + "/1_screen.png'"
+var double_picture = "'file://" + __dirname + "/2_screens.png'"
+var triple_picture = "'file://" + __dirname + "/3_screens.png'"
 
 var execute_set = function(command){
   spawn('/bin/bash', ['-c', command]);
@@ -16,19 +16,19 @@ var execute_get = function(command){
 }
 
 var switch_to_single = function(){
-  execute_set("notify-send 'switching to single'");
+  execute_set("notify-send 'switching to single-monitor background'");
   execute_set("gsettings set org.gnome.desktop.background picture-uri " + single_picture);
   execute_set("gsettings set org.gnome.desktop.background picture-options zoom");
 }
 
 var switch_to_double = function(){
-  execute_set("notify-send 'switching to double'");
+  execute_set("notify-send 'switching to double-monitor background'");
   execute_set("gsettings set org.gnome.desktop.background picture-uri " + double_picture);
   execute_set("gsettings set org.gnome.desktop.background picture-options spanned");
 }
 
 var switch_to_triple = function(){
-  execute_set("notify-send 'switching to triple'");
+  execute_set("notify-send 'switching to triple-monitor background'");
   execute_set("gsettings set org.gnome.desktop.background picture-uri " + triple_picture);
   execute_set("gsettings set org.gnome.desktop.background picture-options spanned");
 }
@@ -51,14 +51,14 @@ var check_wallpaper = function(){
 var arrange = function(){
   var test = [check_connected(), check_wallpaper()];
   var testString = test.join(', ');
-  console.log(test);
-  if (testString === "1, single" || test === "2, double" || test === "3, triple"){
+  console.log(testString);
+  if (testString === "1, single" || testString === "2, double" || testString === "3, triple"){
     execute_set("notify-send 'already on " + test[1] + "-monitor wallpaper'");
-  } else if (test[0] == 1){
+  } else if (test[0] === 1){
     switch_to_single();
-  } else if (test[0] == 2){
+  } else if (test[0] === 2){
     switch_to_double();
-  } else if (test[0] == 3){
+  } else if (test[0] === 3){
     switch_to_triple();
   }
 }
